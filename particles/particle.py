@@ -11,13 +11,17 @@ class Particle:
 
     def __init__(self,
                  sprite: Sprite,
-                 behaviors: T.List[ParticleBehavior]
+                 behaviors: T.List[ParticleBehavior],
+                 max_life: float = 5
                  ):
         self.sprite = sprite
         self.behaviors = behaviors
         self.crt_time = 0
+        self.max_life = max_life
 
     def update(self, dt):
         self.crt_time += dt
+        destroy = False
         for beh in self.behaviors:
-            beh.update(self, dt)
+            destroy = destroy or beh.update(self, dt)
+        return destroy or self.crt_time > self.max_life
