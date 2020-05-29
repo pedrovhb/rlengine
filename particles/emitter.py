@@ -4,7 +4,7 @@ import math
 import random
 import typing as T
 
-from .behavior import BehaviorAcceleration, BehaviorFade
+from .behavior import BehaviorAcceleration, BehaviorFade, BehaviorRotate
 
 if T.TYPE_CHECKING:
     pass
@@ -64,16 +64,35 @@ class TestEmitter(ParticleEmitter):
 
     def update(self, dt):
         super(TestEmitter, self).update(dt)
-
         self.create_particle(
             100,
             100,
-            1 / 20,
+            1 / 10,
             particle_texture,
             [
                 BehaviorAcceleration(
-                    100, math.fmod(self.crt_time, math.pi*2), 1, math.pi/4
+                    100,
+                    math.fmod(self.crt_time * 5, math.pi * 2),
+                    1,
+                    math.pi / 4,
                 ),
-                BehaviorFade(0.5)
+                BehaviorFade(0.3),
+                BehaviorRotate(math.pi * 100),
+            ],
+        )
+        self.create_particle(
+            100,
+            100,
+            1 / 10,
+            particle_texture,
+            [
+                BehaviorAcceleration(
+                    100,
+                    math.fmod(-self.crt_time * 5, math.pi * 2),
+                    1,
+                    math.pi / 4,
+                ),
+                BehaviorFade(0.3),
+                BehaviorRotate(math.pi * 100),
             ],
         )

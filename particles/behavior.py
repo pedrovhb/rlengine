@@ -63,3 +63,14 @@ class BehaviorFade(ParticleBehavior):
     def update(self, particle: Particle, dt: float):
         particle.sprite.opacity -= self.decay_rate * dt * 255
         return particle.sprite.opacity <= 0
+
+
+class BehaviorRotate(ParticleBehavior):
+    __slots__ = {"rotate_rate"}
+
+    def __init__(self, rotate_rate):
+        self.rotate_rate = rotate_rate
+
+    def update(self, particle: Particle, dt: float):
+        particle.sprite.rotation += self.rotate_rate * dt
+        return False
